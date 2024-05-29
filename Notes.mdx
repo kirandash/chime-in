@@ -36,3 +36,8 @@
 - `pnpm i joi` for validation
   - will validate env variables as well
 - mongodb installation: https://www.mongodb.com/docs/manual/installation/
+- install mongo for mac: https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/
+- create a folder data/db in ~ and from ~ run: `mongod --dbpath=data/db`
+- run be: `pnpm run start:dev` and check if the connection is successful
+  - mongod should log "msg":"Connection accepted"
+  - be should log "MongooseCoreModule dependencies initialized"
