@@ -1,20 +1,18 @@
 ## Chatterbox
 
-### 1 UI Setup
-
-#### 1.1 Create a new project
+### 1 Create a new project
 
 - `npx create-react-app chatterbox-ui --template typescript`
 - `npm i @mui/material @emotion/react @emotion/styled @fontsource/roboto @mui/icons-material`
 
-#### 1.2 Implement Dark Theme using MUI and some base styling
+### 2 Implement Dark Theme using MUI and some base styling
 
 - `createTheme` API and `ThemeProvider` for dark theme
 - `CssBaseline` for base styling
 
-#### 1.3 Login Form
+### 3 Login Form
 
-#### 1.4 Add routing with react router dom
+### 4 Add routing with react router dom
 
 - `npm i react-router-dom localforage match-sorter sort-by`
 - packages: `react-router-dom`, `localforage`, `match-sorter`, `sort-by`
@@ -22,3 +20,9 @@
 - localforage is used for storing data in local storage
 - match-sorter is used for sorting and filtering data
 - sort-by is used for sorting data
+
+### 5 NestJS BE setup
+
+- install nestjs globally: `npm i -g @nestjs/cli`
+- create a new nestjs project: `nest new chatterbox-be`
+- `pnpm run start:dev` to start the server
