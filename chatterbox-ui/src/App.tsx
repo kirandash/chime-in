@@ -4,6 +4,7 @@ import {
   ThemeProvider,
   createTheme,
 } from "@mui/material";
+import Auth from "./components/auth/Auth";
 
 const darkTheme = createTheme({
   palette: {
@@ -17,7 +18,7 @@ function App() {
       {/* CSS Baseline for some default styling */}
       <CssBaseline />
       <Container>
-        <h1>Chatter Box!</h1>
+        <Auth />
       </Container>
     </ThemeProvider>
   );
