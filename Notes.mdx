@@ -41,3 +41,12 @@
 - run be: `pnpm run start:dev` and check if the connection is successful
   - mongod should log "msg":"Connection accepted"
   - be should log "MongooseCoreModule dependencies initialized"
+  - if already running please kill the process.
+    - `ps aux | grep mongod`
+    - `kill <processid>`
+
+### 7 Setup graphql and apollo, users resources
+
+- `pnpm i @nestjs/graphql @nestjs/apollo @apollo/server graphql`
+- graphql playground: http://localhost:3000/graphql
+- `nest g resource users`
