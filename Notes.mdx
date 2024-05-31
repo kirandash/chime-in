@@ -88,3 +88,14 @@ mutation {
 - `pnpm i nestjs-pino pino-http pino-pretty`
 
 ### 13 Modify logging config for production
+
+### 14 DB Migrations - up and down
+
+- we will use https://www.npmjs.com/package/migrate-mongo
+- `pnpm i migrate-mongo`
+- type: `pnpm i -D @types/migrate-mongo`
+- `pnpm i mongodb`: to get access to the types
+- create migration for user email index and make it unique
+- we can use this for validation to make sure we don't have duplicate emails
+- in mongo client we should be able to see `email_1` index
+- and in changelog we should see the migration file details
