@@ -57,3 +57,21 @@
 - abstract repository for common methods
 
 ### 9 User CRUD, User Entity and User Repository, Refactor Abstract entity, Abstract repository
+
+### 10 User CRUD continued
+
+- `pnpm i bcrypt` and `pnpm i -D @types/bcrypt`
+- sample graphql queries and mutations:
+- createUser:
+
+```
+mutation {
+  createUser(createUserInput:{
+    email:"user1@kirandash.com",
+    password: "password123"
+  }) {
+    _id
+    email
+  }
+}
+```

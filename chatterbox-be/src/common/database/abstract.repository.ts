@@ -1,4 +1,4 @@
-import { FilterQuery, Model, Types } from 'mongoose';
+import { FilterQuery, Model, Types, UpdateQuery } from 'mongoose';
 import { AbstractEntity } from './abstract.entity';
 import { Logger, NotFoundException } from '@nestjs/common';
 
@@ -35,7 +35,7 @@ export abstract class AbstractRepository<T extends AbstractEntity> {
 
   async findOneAndUpdate(
     filterQuery: FilterQuery<T>,
-    update: Partial<T>,
+    update: UpdateQuery<T>,
   ): Promise<T> {
     const document = await this.model.findOneAndUpdate(filterQuery, update, {
       // lean option is used to return a plain JavaScript object rather than a Mongoose document

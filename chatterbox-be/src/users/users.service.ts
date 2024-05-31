@@ -2,13 +2,22 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { UsersRepository } from './users.repository';
-
+import * as bcrypt from 'bcrypt';
 @Injectable()
 export class UsersService {
   constructor(private readonly usersRepository: UsersRepository) {}
 
-  create(createUserInput: CreateUserInput) {
-    return 'This action adds a new user';
+  private async hashPassword(password: string) {
+    // 10 is the number of salt rounds. The higher the number, the more secure the hash.
+    return bcrypt.hash(password, 10);
+  }
+
+  async create(createUserInput: CreateUserInput) {
+    // Note: Make sure to not save the password in plain text. Use a hashing algorithm like bcrypt to hash the password before saving it to the database.
+    return this.usersRepository.create({
+      ...createUserInput,
+      password: await this.hashPassword(createUserInput.password),
+    });
   }
 
   async findAll() {
@@ -16,15 +25,23 @@ export class UsersService {
     return this.usersRepository.find({});
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(_id: string) {
+    return this.usersRepository.findOne({ _id });
   }
 
-  update(id: number, updateUserInput: UpdateUserInput) {
-    return `This action updates a #${id} user`;
+  async update(_id: string, updateUserInput: UpdateUserInput) {
+    return this.usersRepository.findOneAndUpdate(
+      { _id },
+      {
+        $set: {
+          ...updateUserInput,
+          password: await this.hashPassword(updateUserInput.password),
+        },
+      },
+    );
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(_id: string) {
+    return this.usersRepository.findOneAndDelete({ _id });
   }
 }
