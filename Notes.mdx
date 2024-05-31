@@ -107,3 +107,10 @@ mutation {
 - it will help us fetch, cache and modify data
 - we need to write query and mutation on UI using graphql with apollo client
 - `pnpm i @apollo/client graphql` from ui folder
+
+### 16 Create User from UI
+
+- install apollo client devtools extension (ext id: apollographql.vscode-apollo)
+- to fix CORS issue:
+  - use proxy in package.json: `"proxy": "http://localhost:3001"`. this will proxy all requests to 3000
+  - 🚨 TODO: it doesn't work for now. So temporarily we have allowed all domains in cors settings in main.ts. This is not recommended for production
