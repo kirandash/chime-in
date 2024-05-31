@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
 import { DatabaseModule } from './common/database/database.module';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -24,15 +24,28 @@ import { LoggerModule } from 'nestjs-pino';
     }),
     DatabaseModule,
     UsersModule,
-    LoggerModule.forRoot({
-      pinoHttp: {
-        transport: {
-          target: 'pino-pretty',
-          options: {
-            singleLine: true,
+    LoggerModule.forRootAsync({
+      useFactory: (configService: ConfigService) => {
+        const isProduction = configService.get('NODE_ENV') === 'production';
+
+        return {
+          pinoHttp: {
+            // we will remove pino-pretty in production since it might slow down the app
+            transport: isProduction
+              ? undefined
+              : {
+                  target: 'pino-pretty',
+                  options: {
+                    singleLine: true,
+                  },
+                },
+            // debug might be too verbose for production
+            level: isProduction ? 'info' : 'debug',
           },
-        },
+        };
       },
+      // Note: Don't forget to inject the ConfigService so that it's available for useFactory
+      inject: [ConfigService],
     }),
   ],
   controllers: [AppController],
