@@ -140,6 +140,7 @@ mutation {
 - `pnpm install --save-dev @types/passport-jwt`
 - generate secret key: `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`
 - you can decode jwt token at https://jwt.io/
+- send jwt token back in reponse
 
 ### 20 JWT Strategy and apply the jwt auth guards
 
@@ -147,3 +148,5 @@ mutation {
 - `pnpm i cookie-parser`: to parse cookies from request and attach to response
 - `pnpm i -D @types/cookie-parser`
 - https://www.npmjs.com/package/cookie-parser
+- use cookie parser to parse cookies from request and attach to response
+- use jwt strategy to authenticate jwt and apply to graphql, REST endpoints
