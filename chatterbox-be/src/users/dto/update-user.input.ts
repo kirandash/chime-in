@@ -1,8 +1,6 @@
 import { CreateUserInput } from './create-user.input';
-import { InputType, Field, PartialType } from '@nestjs/graphql';
+import { InputType, PartialType } from '@nestjs/graphql';
 
 @InputType()
-export class UpdateUserInput extends PartialType(CreateUserInput) {
-  @Field()
-  _id: string;
-}
+// Note: it is a good practice to not allow user to edit the id field since it should be fetched from the database. We have done this in user service
+export class UpdateUserInput extends PartialType(CreateUserInput) {}
