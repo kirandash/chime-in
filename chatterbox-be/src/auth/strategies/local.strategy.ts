@@ -10,6 +10,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     super({ usernameField: 'email' });
   }
 
+  // passport will call this method to validate the user and attach the user object to the request object
   async validate(email: string, password: string) {
     try {
       return await this.usersService.verifyUser(email, password);
