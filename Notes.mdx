@@ -114,3 +114,14 @@ mutation {
 - to fix CORS issue:
   - use proxy in package.json: `"proxy": "http://localhost:3001"`. this will proxy all requests to 3000
   - 🚨 TODO: it doesn't work for now. So temporarily we have allowed all domains in cors settings in main.ts. This is not recommended for production
+
+### 17 Backend Authentication with Passport
+
+- `pnpm install --save @nestjs/passport passport passport-local`
+- `pnpm install --save-dev @types/passport-local`
+- https://docs.nestjs.com/recipes/passport
+- https://www.passportjs.org/packages/
+- we are using passport-local strategy for now
+  - it will accept a username and password and authenticate the user and return a jwt token
+- generate auth module: `nest g module auth`
+- generate auth service: `nest g service auth`

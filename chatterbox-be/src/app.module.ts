@@ -8,6 +8,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { UsersModule } from './users/users.module';
 import { LoggerModule } from 'nestjs-pino';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     // This will load the .env file and make it available to the app
@@ -47,6 +48,7 @@ import { LoggerModule } from 'nestjs-pino';
       // Note: Don't forget to inject the ConfigService so that it's available for useFactory
       inject: [ConfigService],
     }),
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
