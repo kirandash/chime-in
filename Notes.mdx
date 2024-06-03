@@ -132,3 +132,11 @@ mutation {
 - https://docs.nestjs.com/guards#authorization-guard
 - `nest g controller auth`
 - read more about custom decorators: https://docs.nestjs.com/graphql/other-features#custom-decorators
+
+### 19 JWT functionality
+
+- https://docs.nestjs.com/recipes/passport#jwt-functionality
+- `pnpm install --save @nestjs/jwt passport-jwt`
+- `pnpm install --save-dev @types/passport-jwt`
+- generate secret key: `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`
+- you can decode jwt token at https://jwt.io/

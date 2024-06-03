@@ -3,9 +3,12 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 import { CurrentUser } from './current-user.decorator';
 import { User } from '../users/entities/user.entity';
 import { Response } from 'express';
+import { AuthService } from './auth.service';
 
 @Controller('auth')
 export class AuthController {
+  constructor(private authService: AuthService) {}
+
   @Post('login')
   @UseGuards(LocalAuthGuard)
   async login(
@@ -15,6 +18,6 @@ export class AuthController {
     // passthrough: true will make sure that the response object is passed to the controller method and make sure nestjs doesn't override the response object
     @Res({ passthrough: true }) response: Response,
   ) {
-    // jwt functionality
+    await this.authService.login(user, response);
   }
 }
