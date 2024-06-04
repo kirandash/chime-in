@@ -5,9 +5,10 @@ type AuthProps = {
   submitButtonLabel: string;
   onSubmit: (credentials: { email: string; password: string }) => Promise<void>;
   children: React.ReactNode;
+  error?: string;
 };
 
-const Auth = ({ submitButtonLabel, onSubmit, children }: AuthProps) => {
+const Auth = ({ submitButtonLabel, onSubmit, error, children }: AuthProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -31,6 +32,8 @@ const Auth = ({ submitButtonLabel, onSubmit, children }: AuthProps) => {
         variant="filled"
         onChange={(e) => setEmail(e.target.value)}
         value={email}
+        error={Boolean(error)}
+        helperText={error}
       />
 
       <TextField
@@ -39,6 +42,8 @@ const Auth = ({ submitButtonLabel, onSubmit, children }: AuthProps) => {
         variant="filled"
         onChange={(e) => setPassword(e.target.value)}
         value={password}
+        error={!!error}
+        helperText={error}
       />
       <Button variant="contained" onClick={() => onSubmit({ email, password })}>
         {submitButtonLabel}

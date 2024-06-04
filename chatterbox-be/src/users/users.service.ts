@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { UsersRepository } from './users.repository';
@@ -14,10 +18,19 @@ export class UsersService {
 
   async create(createUserInput: CreateUserInput) {
     // Note: Make sure to not save the password in plain text. Use a hashing algorithm like bcrypt to hash the password before saving it to the database.
-    return this.usersRepository.create({
-      ...createUserInput,
-      password: await this.hashPassword(createUserInput.password),
-    });
+    try {
+      return await this.usersRepository.create({
+        ...createUserInput,
+        password: await this.hashPassword(createUserInput.password),
+      });
+    } catch (error) {
+      // 11000 is the error code for duplicate key error
+      if (error.message.includes('E11000')) {
+        throw new UnprocessableEntityException(
+          'User with this email already exists',
+        );
+      }
+    }
   }
 
   async findAll() {

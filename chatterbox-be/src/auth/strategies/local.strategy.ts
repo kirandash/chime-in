@@ -14,10 +14,11 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   async validate(email: string, password: string) {
     try {
       return await this.usersService.verifyUser(email, password);
-    } catch (error) {
+    } catch (err) {
       // rethrow the error as UnauthorizedException since verifyUser might also throw user not found error along with unauthorized error
       // we want to group all the unauthorized errors under UnauthorizedException
-      throw new UnauthorizedException(error);
+      // we don't want to expose the actual error message to the client
+      throw new UnauthorizedException('Invalid credentials');
     }
   }
 }
