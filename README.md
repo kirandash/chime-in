@@ -1,6 +1,6 @@
 <div align="center">
   
-  <h1>ChattberBoX - Real Time Chat App</h1>
+  <h1>ChatterBox - Real Time Chat App</h1>
 
 📚 Code for the Livestream tutorial</span>
 
