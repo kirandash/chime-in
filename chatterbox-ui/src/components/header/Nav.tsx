@@ -1,27 +1,22 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import { Page } from "../../types/page.types";
+import router from "../auth/Routes";
 
 type NavigationProps = {
-  pages: string[];
+  pages: Page[];
 };
 
 const Nav = ({ pages }: NavigationProps) => {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
   return (
     <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
       {pages.map((page) => (
         <Button
-          key={page}
-          onClick={handleCloseNavMenu}
+          key={page.title}
+          onClick={() => router.navigate(page.path)}
           sx={{ my: 2, color: "white", display: "block" }}
         >
-          {page}
+          {page.title}
         </Button>
       ))}
     </Box>
