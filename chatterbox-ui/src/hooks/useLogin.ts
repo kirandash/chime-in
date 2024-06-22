@@ -29,7 +29,7 @@ const useLogin = () => {
       return;
     }
     setError("");
-    // clear apollo cache and refetch all active cached queries
+    // refetch all active cached queries
     await client.refetchQueries({ include: "active" });
   };
 
