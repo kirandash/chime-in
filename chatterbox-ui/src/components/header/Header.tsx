@@ -5,6 +5,7 @@ import Branding from "./Branding";
 import MobileNavigation from "./mobile/MobileNavigation";
 import MobileBranding from "./mobile/MobileBranding";
 import Nav from "./Nav";
+import Settings from "./Settings";
 
 const pages: string[] = [];
 
@@ -17,6 +18,7 @@ const Header = () => {
           <Branding />
           <Nav pages={pages} />
           <MobileBranding />
+          <Settings />
         </Toolbar>
       </Container>
     </AppBar>
