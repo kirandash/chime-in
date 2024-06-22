@@ -11,9 +11,11 @@ const SignIn = () => {
       onSubmit={(request) => login(request)}
       error={error}
     >
-      <Link to="/sign-up" style={{ alignSelf: "center" }}>
-        <MuiLink>Don't have an account? Sign up</MuiLink>
-      </Link>
+      <div style={{ alignSelf: "center" }}>
+        <MuiLink component={Link} to="/sign-up">
+          Don't have an account? Sign up
+        </MuiLink>
+      </div>
     </Auth>
   );
 };

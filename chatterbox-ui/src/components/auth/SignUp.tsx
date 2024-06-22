@@ -35,9 +35,11 @@ const SignUp = () => {
         }
       }}
     >
-      <Link to="/sign-in" style={{ alignSelf: "center" }}>
-        <MuiLink>Already have an account? Sign in</MuiLink>
-      </Link>
+      <div style={{ alignSelf: "center" }}>
+        <MuiLink component={Link} to="/sign-in">
+          Already have an account? Sign in
+        </MuiLink>
+      </div>
     </Auth>
   );
 };
