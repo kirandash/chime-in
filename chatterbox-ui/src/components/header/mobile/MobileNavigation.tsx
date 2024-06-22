@@ -5,7 +5,7 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
-import { Page } from "../../../types/page.types";
+import { Page } from "../../../types/page.type";
 import router from "../../auth/Routes";
 
 type MobileNavigationProps = {

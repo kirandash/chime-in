@@ -158,14 +158,12 @@ mutation {
 
 ### 23 Home page and AuthGuard
 
-- TODO: Currently the jwt authorization token is not being passed to the server when making graphql call for getMe. Need to fix this before next stream
-
 ### 24 Redirect Implementation - for unauthenticated users
 
 - if user is not signed in, redirect to sign in page
   - let's do this by checking the status code, if it is 401, redirect to sign in page
 - also if jwt token is expired, backend will return 401
-- TODO 🚨: Currently unauthenticated errors from apollo are uncaught and we need to fix this.
+- TODO 🚨: Currently unauthenticated errors from apollo are uncaught and we need to fix this. This happens during logout
 
 ### 24 Redirect onSuccesful login
 
@@ -180,3 +178,7 @@ mutation {
 ### 27 Logout - BE and FE
 
 ### 28 Hide user settings icon from header if not logged in
+
+### 29 More Error handling on UI with Alert and Snackbar
+
+- TODO: 🚨 Navigation not working on clicking the links

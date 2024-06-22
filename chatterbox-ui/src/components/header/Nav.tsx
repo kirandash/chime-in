@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { Page } from "../../types/page.types";
+import { Page } from "../../types/page.type";
 import router from "../auth/Routes";
 
 type NavigationProps = {
