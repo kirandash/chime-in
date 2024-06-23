@@ -1,8 +1,8 @@
 <div align="center">
   
-  <h1>ChatterBox - Real Time Chat App</h1>
+  <h1>Chime In - Real Time Chat App</h1>
 
-📚 Code for the Livestream tutorial</span>
+📚 Code for the Live stream tutorial series</span>
 
 Feel free to reach us on our social platforms! 😊 <br />
 <a href="https://www.youtube.com/@bgwebagency">YouTube</a> ||
