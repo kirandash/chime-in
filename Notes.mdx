@@ -194,3 +194,14 @@ mutation {
   - `nest g resource chats`
 - for validation: https://docs.nestjs.com/techniques/validation#using-the-built-in-validationpipe
 - `pnpm i --save class-validator class-transformer`
+
+### 33 GraphQL Type Generation
+
+- install on ui code base
+- https://the-guild.dev/graphql/codegen/docs/getting-started/installation
+- `npm i -D @graphql-codegen/cli @parcel/watcher`
+  - graphql codegen will generate types for us
+  - parcel watcher will watch for changes and regenerate types
+- `npx graphql-code-generator init`
+- run watch script parallely using https://www.npmjs.com/package/concurrently
+- `npm i -D concurrently`

@@ -1,17 +1,17 @@
-import { gql, useQuery } from "@apollo/client";
-import { User } from "../models/User";
+import { useQuery } from "@apollo/client";
+import { graphql } from "../gql";
 
-const GET_ME = gql`
+const GET_ME = graphql(`
   query Me {
     me {
       _id
       email
     }
   }
-`;
+`);
 
 const useGetMe = () => {
-  return useQuery<{ me: User }>(GET_ME);
+  return useQuery(GET_ME);
 };
 
 export { useGetMe };
