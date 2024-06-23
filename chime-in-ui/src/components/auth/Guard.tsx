@@ -4,9 +4,11 @@ import { useGetMe } from "../../hooks/useGetMe";
 import { isAuthenticatedVar } from "../../constants/authenticated";
 import { snackVar } from "../../constants/snack";
 import { UNKNOWN_ERROR_SNACK } from "../../constants/errors";
+import { usePath } from "../../hooks/usePath";
 
 const Guard = ({ children }: { children: JSX.Element }) => {
   const { data: user, error } = useGetMe();
+  const { path } = usePath();
 
   useEffect(() => {
     if (user) {
@@ -25,7 +27,7 @@ const Guard = ({ children }: { children: JSX.Element }) => {
 
   return (
     <>
-      {excludedRoutes.includes(window.location.pathname) ? (
+      {excludedRoutes.includes(path) ? (
         children
       ) : user ? (
         children

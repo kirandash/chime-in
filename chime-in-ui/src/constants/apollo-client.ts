@@ -10,7 +10,7 @@ const logoutLink = onError((error) => {
     (error.graphQLErrors[0].extensions.originalError as any).statusCode === 401
   ) {
     if (!excludedRoutes.includes(window.location.pathname)) {
-      // onLogout();
+      onLogout();
     }
   }
 });

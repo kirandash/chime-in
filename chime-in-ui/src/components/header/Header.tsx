@@ -32,7 +32,7 @@ const Header = () => {
 
   return (
     <AppBar position="static">
-      <Container maxWidth="xl">
+      <Container>
         <Toolbar disableGutters>
           <MobileNavigation
             pages={isAuthenticated ? pages : unauthenticatedPages}
