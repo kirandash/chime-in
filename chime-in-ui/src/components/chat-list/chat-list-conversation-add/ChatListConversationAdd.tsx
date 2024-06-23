@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
+import { useCreateChat } from "../../../hooks/useCreateChat";
 
 type ChatListConversationAddProps = {
   open: boolean;
@@ -24,6 +25,9 @@ const ChatListConversationAdd = ({
   handleClose,
 }: ChatListConversationAddProps) => {
   const [isPrivate, setIsPrivate] = useState(true);
+  const [name, setName] = useState<string | undefined>();
+  const [createChat] = useCreateChat();
+
   return (
     <Modal open={open} onClose={handleClose}>
       <Box
@@ -63,9 +67,28 @@ const ChatListConversationAdd = ({
             </IconButton>
           </Paper>
         ) : (
-          <TextField label="Chat Name" sx={{ mt: 2, width: "100%" }} />
+          <TextField
+            label="Chat Name"
+            sx={{ mt: 2, width: "100%" }}
+            onChange={(e) => setName(e.target.value)}
+          />
         )}
-        <Button variant="contained" sx={{ mt: 2 }} fullWidth>
+        <Button
+          variant="contained"
+          sx={{ mt: 2 }}
+          fullWidth
+          onClick={() => {
+            createChat({
+              variables: {
+                createChatInput: {
+                  isPrivate,
+                  name: name ?? undefined,
+                },
+              },
+            });
+            handleClose();
+          }}
+        >
           Add Chat
         </Button>
       </Box>
