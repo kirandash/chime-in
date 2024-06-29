@@ -1,5 +1,4 @@
-
-import type { CodegenConfig } from '@graphql-codegen/cli';
+import type { CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
   overwrite: true,
@@ -8,9 +7,12 @@ const config: CodegenConfig = {
   generates: {
     "src/gql/": {
       preset: "client",
-      plugins: []
-    }
-  }
+      plugins: [],
+      presetConfig: {
+        fragmentMasking: false,
+      },
+    },
+  },
 };
 
 export default config;

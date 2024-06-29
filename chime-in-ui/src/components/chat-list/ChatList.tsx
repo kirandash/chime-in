@@ -5,10 +5,12 @@ import { Stack } from "@mui/material";
 import ChatListHeader from "./chat-list-header/ChatListHeader";
 import { useState } from "react";
 import ChatListConversationAdd from "./chat-list-conversation-add/ChatListConversationAdd";
+import { useFindChats } from "../../hooks/useFindChats";
 
 const ChatList = () => {
   const [showAddChatConversationModal, setShowAddChatConversationModal] =
     useState(false);
+  const { data } = useFindChats();
 
   return (
     <>
@@ -30,24 +32,14 @@ const ChatList = () => {
             overflow: "auto",
           }}
         >
-          <ChatListItem />
-          <Divider variant="inset" component="li" />
-          <ChatListItem />
-          <Divider variant="inset" component="li" />
-          <ChatListItem />
-          <Divider variant="inset" component="li" />
-          <ChatListItem />
-          <Divider variant="inset" component="li" />
-          <ChatListItem />
-          <Divider variant="inset" component="li" />
-          <ChatListItem />
-          <ChatListItem />
-          <Divider variant="inset" component="li" />
-          <ChatListItem />
-          <Divider variant="inset" component="li" />
-          <ChatListItem />
-          <Divider variant="inset" component="li" />
-          <ChatListItem />
+          {data?.chats.map((chat, index) => (
+            <>
+              <ChatListItem key={chat._id} name={chat.name} />
+              {index !== data.chats.length - 1 && (
+                <Divider variant="inset" component="li" />
+              )}
+            </>
+          ))}
         </List>
       </Stack>
     </>
