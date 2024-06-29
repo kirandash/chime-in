@@ -14,6 +14,7 @@ export class ChatsService {
       // list of userIds to invite
       // if userIds is not provided, it will be an empty array
       userIds: createChatInput.userIds || [],
+      messages: [],
     });
   }
 
