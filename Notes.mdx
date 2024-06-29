@@ -213,3 +213,8 @@ mutation {
 - we created a findAll method in chat service
 - on FE we created useFindChats to call the graphql query
 - we also created a chat.fragment.ts to define the fields we need from the chat object
+
+### 36 Update chat list query on chat creation
+
+- after chat creation, update the cache with the new chat (useCreateChat hook)
+- also make sure to export the chat fragment from chat.fragment.ts
