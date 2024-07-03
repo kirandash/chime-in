@@ -15,9 +15,9 @@ import Snackbar from "./components/snackbar/Snackbar";
 import ChatList from "./components/chat-list/ChatList";
 import { usePath } from "./hooks/usePath";
 
-const darkTheme = createTheme({
+const lightTheme = createTheme({
   palette: {
-    mode: "dark",
+    mode: "light",
   },
 });
 
@@ -27,7 +27,7 @@ function App() {
 
   return (
     <ApolloProvider client={client}>
-      <ThemeProvider theme={darkTheme}>
+      <ThemeProvider theme={lightTheme}>
         {/* CSS Baseline for some default styling */}
         <CssBaseline />
         <Header />
@@ -35,10 +35,10 @@ function App() {
           <Guard>
             {showChatList ? (
               <Grid container>
-                <Grid item md={3}>
+                <Grid item xs={12} md={5} lg={4}>
                   <ChatList />
                 </Grid>
-                <Grid item md={9}>
+                <Grid item xs={12} md={7} lg={8}>
                   <RouterProvider router={router} />
                 </Grid>
               </Grid>

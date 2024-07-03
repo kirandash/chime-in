@@ -10,15 +10,17 @@ import router from "../../auth/Routes";
 type ChatListItemProps = {
   name?: string | null;
   _id: string;
+  selected?: boolean;
 };
 
-const ChatListItem = ({ name, _id }: ChatListItemProps) => {
+const ChatListItem = ({ name, _id, selected }: ChatListItemProps) => {
   return (
     <ListItem alignItems="flex-start" disablePadding>
       <ListItemButton
         onClick={() => {
           router.navigate(`/chats/${_id}`);
         }}
+        selected={selected}
       >
         <ListItemAvatar>
           <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
