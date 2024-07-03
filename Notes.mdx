@@ -252,3 +252,9 @@ mutation {
     - this will help us establish pub sub functionality
 - Implement pub sub functionality
   - implement locally at first and make it persistent later
+
+### 42 Message Created Subscription - BE and FE
+
+- install on FE: `pnpm i graphql-ws`
+- REACT_APP_WS_URL=localhost:3001 because we won't get CORS issues for WS.
+- use split in apollo client to separate http and ws

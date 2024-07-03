@@ -14,6 +14,7 @@ import SendIcon from "@mui/icons-material/Send";
 import { useCreateMessage } from "../../hooks/useCreateMessage";
 import { useEffect, useRef, useState } from "react";
 import { useGetMessages } from "../../hooks/useGetMessages";
+import { useMessageCreated } from "../../hooks/useMessageCreated";
 
 const Chat = () => {
   const params = useParams();
@@ -27,6 +28,9 @@ const Chat = () => {
   const { data: messages } = useGetMessages({ chatId });
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
+  const { data: latestMessage } = useMessageCreated({ chatId });
+
+  console.log(latestMessage);
 
   const handleCreateMessage = async () => {
     await createMessage({

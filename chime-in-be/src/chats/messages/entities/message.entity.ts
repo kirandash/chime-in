@@ -20,6 +20,10 @@ export class Message extends AbstractEntity {
   @Field()
   @Prop()
   userId: string;
+
+  @Field()
+  @Prop()
+  chatId: string;
 }
 
 // SchemaFactory.createForClass() method is used to create a Mongoose schema from a class.

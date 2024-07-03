@@ -1,12 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ChatsRepository } from '../chats.repository';
 import { CreateMessageInput } from './dto/create-message.input';
 import { Message } from './entities/message.entity';
 import { Types } from 'mongoose';
+import { PUB_SUB } from '../../common/constants/injection-tokens';
+import { PubSub } from 'graphql-subscriptions';
+import { MESSAGE_CREATED } from './constants/pubsub-triggers';
 
 @Injectable()
 export class MessagesService {
-  constructor(private readonly chatsRepository: ChatsRepository) {}
+  constructor(
+    private readonly chatsRepository: ChatsRepository,
+    @Inject(PUB_SUB) private readonly pubSub: PubSub,
+  ) {}
 
   private userChatFilter(userId: string) {
     return {
@@ -25,6 +31,7 @@ export class MessagesService {
       content,
       createdAt: new Date(),
       userId,
+      chatId,
       _id: new Types.ObjectId(),
     };
     // findOneAndUpdate() method is used to find a document and update it in the database.
@@ -44,18 +51,20 @@ export class MessagesService {
       },
     );
 
+    // publish the message to the chatId channel
+    // the name should match the name of the subscription i.e. messageCreated
+    await this.pubSub.publish(MESSAGE_CREATED, { messageCreated: message });
+
     return message;
   }
 
   async getMessages(chatId: string, userId: string) {
     return (
-      (
-        await this.chatsRepository.findOne({
-          _id: chatId,
-          // to check if user is allowed to access the chat
-          ...this.userChatFilter(userId),
-        })
-      ).messages || []
-    );
+      await this.chatsRepository.findOne({
+        _id: chatId,
+        // to check if user is allowed to access the chat
+        ...this.userChatFilter(userId),
+      })
+    ).messages;
   }
 }
