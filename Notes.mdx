@@ -237,3 +237,18 @@ mutation {
 ### 40 Some UI improvements
 
 - TODO: 🚨 Check why content IsNotEmpty validaiton not working for createMessage
+
+### 41 Websockets using GraphQL Subscriptions 🌟 - Config
+
+- To receive real-time updates from the server, we will use GraphQL Subscriptions.
+  - why websockets?
+    - we can use polling but it is not efficient
+    - websockets are more efficient
+- on BE:
+  - `pnpm i graphql-ws graphql-subscriptions`
+  - https://github.com/enisdenjo/graphql-ws
+    - this will help us to create a websocket server using graphql
+  - https://www.npmjs.com/package/graphql-subscriptions
+    - this will help us establish pub sub functionality
+- Implement pub sub functionality
+  - implement locally at first and make it persistent later

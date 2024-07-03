@@ -35,6 +35,8 @@
     "class-validator": "^0.14.1",
     "cookie-parser": "^1.4.6",
     "graphql": "^16.8.1",
+    "graphql-subscriptions": "^2.0.0",
+    "graphql-ws": "^5.16.0",
     "joi": "^17.13.1",
     "migrate-mongo": "^11.0.0",
     "mongodb": "^6.7.0",

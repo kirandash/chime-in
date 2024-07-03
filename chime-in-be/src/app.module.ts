@@ -10,6 +10,7 @@ import { UsersModule } from './users/users.module';
 import { LoggerModule } from 'nestjs-pino';
 import { AuthModule } from './auth/auth.module';
 import { ChatsModule } from './chats/chats.module';
+import { PubSubModule } from './common/pubsub/pubsub.module';
 @Module({
   imports: [
     // This will load the .env file and make it available to the app
@@ -23,9 +24,14 @@ import { ChatsModule } from './chats/chats.module';
       driver: ApolloDriver,
       // This will automatically generate the schema.gql file
       autoSchemaFile: true,
+      subscriptions: {
+        // automatically start the subscription server
+        'graphql-ws': true,
+      },
     }),
     DatabaseModule,
     UsersModule,
+    PubSubModule,
     LoggerModule.forRootAsync({
       useFactory: (configService: ConfigService) => {
         const isProduction = configService.get('NODE_ENV') === 'production';
