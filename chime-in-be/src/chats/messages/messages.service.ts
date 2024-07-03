@@ -8,6 +8,18 @@ import { Types } from 'mongoose';
 export class MessagesService {
   constructor(private readonly chatsRepository: ChatsRepository) {}
 
+  private userChatFilter(userId: string) {
+    return {
+      // $or operator performs a logical OR operation on an array of two or more expressions.
+      $or: [
+        // If userId is equal to the userId of the chat, then update the chat.
+        { userId },
+        // If userId is in the list of userIds of the chat, then update the chat.
+        { userIds: { $in: [userId] } },
+      ],
+    };
+  }
+
   async createMessage({ content, chatId }: CreateMessageInput, userId: string) {
     const message: Message = {
       content,
@@ -21,17 +33,7 @@ export class MessagesService {
       // filter query to find the chat by chatId and userId.
       {
         _id: chatId,
-        // $or operator performs a logical OR operation on an array of two or more expressions.
-        $or: [
-          // If userId is equal to the userId of the chat, then update the chat.
-          { userId },
-          // If userId is in the list of userIds of the chat, then update the chat.
-          {
-            userIds: {
-              $in: [userId],
-            },
-          },
-        ],
+        ...this.userChatFilter(userId),
       },
       // update query to push the message to the messages array of the chat.
       {
@@ -43,5 +45,17 @@ export class MessagesService {
     );
 
     return message;
+  }
+
+  async getMessages(chatId: string, userId: string) {
+    return (
+      (
+        await this.chatsRepository.findOne({
+          _id: chatId,
+          // to check if user is allowed to access the chat
+          ...this.userChatFilter(userId),
+        })
+      ).messages || []
+    );
   }
 }

@@ -33,12 +33,12 @@ const ChatList = () => {
           }}
         >
           {data?.chats.map((chat, index) => (
-            <>
-              <ChatListItem key={chat._id} name={chat.name} _id={chat._id} />
+            <div key={chat._id}>
+              <ChatListItem name={chat.name} _id={chat._id} />
               {index !== data.chats.length - 1 && (
                 <Divider variant="inset" component="li" />
               )}
-            </>
+            </div>
           ))}
         </List>
       </Stack>
