@@ -258,3 +258,7 @@ mutation {
 - install on FE: `pnpm i graphql-ws`
 - REACT_APP_WS_URL=localhost:3001 because we won't get CORS issues for WS.
 - use split in apollo client to separate http and ws
+
+### 43 Authenticated Websockets and passing correct context
+
+- add jwt token to websocket connection in app.module.ts

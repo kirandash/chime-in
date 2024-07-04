@@ -6,25 +6,16 @@ import { Types } from 'mongoose';
 import { PUB_SUB } from '../../common/constants/injection-tokens';
 import { PubSub } from 'graphql-subscriptions';
 import { MESSAGE_CREATED } from './constants/pubsub-triggers';
+import { MessageCreatedArgs } from './dto/message-created.args';
+import { ChatsService } from '../chats.service';
 
 @Injectable()
 export class MessagesService {
   constructor(
     private readonly chatsRepository: ChatsRepository,
+    private readonly chatsService: ChatsService,
     @Inject(PUB_SUB) private readonly pubSub: PubSub,
   ) {}
-
-  private userChatFilter(userId: string) {
-    return {
-      // $or operator performs a logical OR operation on an array of two or more expressions.
-      $or: [
-        // If userId is equal to the userId of the chat, then update the chat.
-        { userId },
-        // If userId is in the list of userIds of the chat, then update the chat.
-        { userIds: { $in: [userId] } },
-      ],
-    };
-  }
 
   async createMessage({ content, chatId }: CreateMessageInput, userId: string) {
     const message: Message = {
@@ -40,7 +31,7 @@ export class MessagesService {
       // filter query to find the chat by chatId and userId.
       {
         _id: chatId,
-        ...this.userChatFilter(userId),
+        ...this.chatsService.userChatFilter(userId),
       },
       // update query to push the message to the messages array of the chat.
       {
@@ -63,8 +54,17 @@ export class MessagesService {
       await this.chatsRepository.findOne({
         _id: chatId,
         // to check if user is allowed to access the chat
-        ...this.userChatFilter(userId),
+        ...this.chatsService.userChatFilter(userId),
       })
     ).messages;
+  }
+
+  async messageCreated({ chatId }: MessageCreatedArgs, userId: string) {
+    await this.chatsRepository.findOne({
+      _id: chatId,
+      ...this.chatsService.userChatFilter(userId),
+    });
+    // MESSAGE_CREATED is the trigger that will be used to notify the client
+    return this.pubSub.asyncIterator(MESSAGE_CREATED);
   }
 }

@@ -18,8 +18,24 @@ export class ChatsService {
     });
   }
 
-  async findAll() {
-    return this.chatsRepository.find({});
+  userChatFilter(userId: string) {
+    return {
+      // $or operator performs a logical OR operation on an array of two or more expressions.
+      $or: [
+        // If userId is equal to the userId of the chat, then user can access the chat.
+        { userId },
+        // If userId is in the list of userIds of the chat,then user can access the chat.
+        { userIds: { $in: [userId] } },
+        // If the chat is not private, then user can access the chat.
+        { isPrivate: false },
+      ],
+    };
+  }
+
+  async findAll(userId: string) {
+    return this.chatsRepository.find({
+      ...this.userChatFilter(userId),
+    });
   }
 
   async findOne(_id: string) {
