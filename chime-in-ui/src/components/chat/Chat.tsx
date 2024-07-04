@@ -24,13 +24,14 @@ const Chat = () => {
   const chatId = params._id;
   const { data } = useFindChatById({ _id: chatId });
   const [message, setMessage] = useState("");
-  const [createMessage] = useCreateMessage(chatId);
+  const [createMessage] = useCreateMessage();
+  // Existing messages from graphql query
   const { data: messages } = useGetMessages({ chatId });
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
-  const { data: latestMessage } = useMessageCreated({ chatId });
 
-  console.log(latestMessage);
+  // Subscribe to new messages
+  useMessageCreated({ chatId });
 
   const handleCreateMessage = async () => {
     await createMessage({
@@ -58,28 +59,36 @@ const Chat = () => {
     <Stack sx={{ height: "90vh", justifyContent: "space-between", p: "15px" }}>
       <h2>{data?.chat.name}</h2>
       <Box sx={{ maxHeight: "70vh", overflow: "scroll" }}>
-        {messages?.messages.map((message) => (
-          <Grid
-            container
-            key={message._id}
-            alignItems={"center"}
-            marginBottom={"0.5rem"}
-          >
-            <Grid item xs={2} md={1}>
-              <Avatar src="" sx={{ width: 30, height: 30 }} />
-            </Grid>
-            <Grid item xs={10} md={11}>
-              <Paper sx={{ width: "fit-content" }}>
-                <Typography sx={{ padding: "1rem" }}>
-                  {message.content}
-                </Typography>
-              </Paper>
-              <Typography variant="caption">
-                {new Date(message.createdAt).toLocaleTimeString()}
-              </Typography>
-            </Grid>
-          </Grid>
-        ))}
+        {messages &&
+          [...messages.messages]
+            .sort((a, b) => {
+              return (
+                new Date(a.createdAt).getTime() -
+                new Date(b.createdAt).getTime()
+              );
+            })
+            .map((message) => (
+              <Grid
+                container
+                key={message._id}
+                alignItems={"center"}
+                marginBottom={"0.5rem"}
+              >
+                <Grid item xs={2} md={1}>
+                  <Avatar src="" sx={{ width: 30, height: 30 }} />
+                </Grid>
+                <Grid item xs={10} md={11}>
+                  <Paper sx={{ width: "fit-content" }}>
+                    <Typography sx={{ padding: "1rem" }}>
+                      {message.content}
+                    </Typography>
+                  </Paper>
+                  <Typography variant="caption">
+                    {new Date(message.createdAt).toLocaleTimeString()}
+                  </Typography>
+                </Grid>
+              </Grid>
+            ))}
         <div ref={messagesEndRef} />
       </Box>
       {/* Message Bar */}
