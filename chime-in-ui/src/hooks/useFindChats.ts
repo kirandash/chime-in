@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { graphql } from "../gql";
 
-const FIND_CHATS = graphql(`
+export const FIND_CHATS = graphql(`
   query Chats {
     chats {
       ...ChatFragment

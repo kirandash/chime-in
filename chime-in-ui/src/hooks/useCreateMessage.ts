@@ -1,6 +1,7 @@
 import { useMutation } from "@apollo/client";
 import { graphql } from "../gql";
 import { updateMessages } from "../cache/messages";
+import { updateLatestMessage } from "../cache/latest-message";
 
 // ! means that the field is required.
 const CREATE_MESSAGE = graphql(`
@@ -17,6 +18,7 @@ const useCreateMessage = () => {
     update(cache, { data }) {
       if (data?.createMessage) {
         updateMessages(cache, data.createMessage);
+        updateLatestMessage(cache, data.createMessage);
       }
     },
   });
