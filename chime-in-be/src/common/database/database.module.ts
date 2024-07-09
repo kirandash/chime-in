@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, Logger } from '@nestjs/common'; // Import Logger
 import { ConfigService } from '@nestjs/config';
 import { ModelDefinition, MongooseModule } from '@nestjs/mongoose';
 import { DbMigrationService } from './db-migration.service';
@@ -8,6 +8,10 @@ import { DbMigrationService } from './db-migration.service';
     MongooseModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({
         uri: configService.get<string>('MONGODB_URI'),
+        connectionFactory: (connection) => {
+          Logger.log('Database connected', 'MongooseModule');
+          return connection;
+        },
       }),
       inject: [ConfigService],
     }),
