@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import ChatListConversationAdd from "./chat-list-conversation-add/ChatListConversationAdd";
 import { useFindChats } from "../../hooks/useFindChats";
 import { usePath } from "../../hooks/usePath";
+import { useMessageCreated } from "../../hooks/useMessageCreated";
 
 const ChatList = () => {
   const [showAddChatConversationModal, setShowAddChatConversationModal] =
@@ -14,6 +15,9 @@ const ChatList = () => {
   const { data } = useFindChats();
   const { path } = usePath();
   const [selectedChatId, setSelectedChatId] = useState("");
+
+  // Subscribe to all chats
+  useMessageCreated({ chatIds: data?.chats.map((chat) => chat._id) || [] });
 
   useEffect(() => {
     const pathParts = path.split("chats/");
@@ -41,22 +45,32 @@ const ChatList = () => {
             overflow: "auto",
           }}
         >
-          {data?.chats
-            .map((chat, index) => (
-              <div key={chat._id}>
-                <ChatListItem
-                  username={chat.latestMessage?.user.username}
-                  latestMessageContent={chat.latestMessage?.content}
-                  name={chat.name}
-                  _id={chat._id}
-                  selected={selectedChatId === chat._id}
-                />
-                {index !== data.chats.length - 1 && (
-                  <Divider variant="inset" component="li" />
-                )}
-              </div>
-            ))
-            .reverse()}
+          {data?.chats &&
+            [...data.chats]
+              .sort((a, b) => {
+                // chatroom with no latest message goes to the end
+                if (!a.latestMessage) return -1;
+                // sort by latest message
+                return (
+                  new Date(a.latestMessage?.createdAt).getTime() -
+                  new Date(b.latestMessage?.createdAt).getTime()
+                );
+              })
+              .map((chat, index) => (
+                <div key={chat._id}>
+                  <ChatListItem
+                    username={chat.latestMessage?.user.username}
+                    latestMessageContent={chat.latestMessage?.content}
+                    name={chat.name}
+                    _id={chat._id}
+                    selected={selectedChatId === chat._id}
+                  />
+                  {index !== data.chats.length - 1 && (
+                    <Divider variant="inset" component="li" />
+                  )}
+                </div>
+              ))
+              .reverse()}
         </List>
       </Stack>
     </>

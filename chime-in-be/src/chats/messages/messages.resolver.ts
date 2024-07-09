@@ -33,13 +33,13 @@ export class MessagesResolver {
 
   @Subscription(() => Message, {
     // This is the filter that will be used to determine if the client should be notified
-    filter: (payload, variables, context) => {
+    filter: (payload, variables: MessageCreatedArgs, context) => {
       const userId = context.req.user._id;
       const message: Message = payload.messageCreated;
       // The payload is the message that was created
       // The variables is the chatId that the client is listening to
       return (
-        message.chatId === variables.chatId &&
+        variables.chatIds.includes(message.chatId) &&
         userId !== message.user._id.toHexString()
       );
     },
@@ -47,6 +47,6 @@ export class MessagesResolver {
   // _messageCreatedArgs is not used but we added it as args so that the chatId can be added as a type for graphql codegen and then used in the filter above
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   messageCreated(@Args() messageCreatedArgs: MessageCreatedArgs) {
-    return this.messagesService.messageCreated(messageCreatedArgs);
+    return this.messagesService.messageCreated();
   }
 }

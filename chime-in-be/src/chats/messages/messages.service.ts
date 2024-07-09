@@ -5,7 +5,6 @@ import { Types } from 'mongoose';
 import { PUB_SUB } from '../../common/constants/injection-tokens';
 import { PubSub } from 'graphql-subscriptions';
 import { MESSAGE_CREATED } from './constants/pubsub-triggers';
-import { MessageCreatedArgs } from './dto/message-created.args';
 import { MessageDocument } from './entities/message.document';
 import { Message } from './entities/message.entity';
 import { UsersService } from '../../users/users.service';
@@ -99,10 +98,7 @@ export class MessagesService {
     );
   }
 
-  async messageCreated({ chatId }: MessageCreatedArgs) {
-    await this.chatsRepository.findOne({
-      _id: chatId,
-    });
+  async messageCreated() {
     // MESSAGE_CREATED is the trigger that will be used to notify the client
     return this.pubSub.asyncIterator(MESSAGE_CREATED);
   }
