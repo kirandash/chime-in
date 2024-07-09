@@ -13,6 +13,10 @@ export class User extends AbstractEntity {
   email: string;
 
   @Prop()
+  @Field()
+  username: string;
+
+  @Prop()
   // don't use @Field() decorator for password field to prevent it from being exposed in the GraphQL schema
   password: string;
 }

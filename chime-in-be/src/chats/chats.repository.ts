@@ -3,14 +3,15 @@ import { AbstractRepository } from '../common/database/abstract.repository';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Chat } from './entities/chat.entity';
+import { ChatDocument } from './entities/chat.document';
 
 // @Injectable() decorator is used to define a class as a provider.
 @Injectable()
-export class ChatsRepository extends AbstractRepository<Chat> {
+export class ChatsRepository extends AbstractRepository<ChatDocument> {
   protected readonly logger = new Logger(ChatsRepository.name);
 
   // @InjectModel() decorator is used to inject a Mongoose model.
-  constructor(@InjectModel(Chat.name) chatModel: Model<Chat>) {
+  constructor(@InjectModel(Chat.name) chatModel: Model<ChatDocument>) {
     // super() method is used to call the constructor of the extended class (AbstractRepository). So we can use the methods of the extended class in the ChatsRepository class.
     super(chatModel);
   }

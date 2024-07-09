@@ -7,10 +7,17 @@ type AuthProps = {
   submitButtonLabel: string;
   onSubmit: (credentials: { email: string; password: string }) => Promise<void>;
   children: React.ReactNode;
+  additionalFields?: React.ReactNode[];
   error?: string;
 };
 
-const Auth = ({ submitButtonLabel, onSubmit, error, children }: AuthProps) => {
+const Auth = ({
+  submitButtonLabel,
+  onSubmit,
+  error,
+  children,
+  additionalFields,
+}: AuthProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { data } = useGetMe();
@@ -45,7 +52,7 @@ const Auth = ({ submitButtonLabel, onSubmit, error, children }: AuthProps) => {
         error={Boolean(error)}
         helperText={error}
       />
-
+      {additionalFields}
       <TextField
         label="Password"
         type="password"

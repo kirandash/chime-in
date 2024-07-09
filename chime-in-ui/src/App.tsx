@@ -17,7 +17,7 @@ import { usePath } from "./hooks/usePath";
 
 const lightTheme = createTheme({
   palette: {
-    mode: "light",
+    mode: "dark",
   },
 });
 

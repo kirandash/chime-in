@@ -45,6 +45,8 @@ const ChatList = () => {
             .map((chat, index) => (
               <div key={chat._id}>
                 <ChatListItem
+                  username={chat.latestMessage?.user.username}
+                  latestMessageContent={chat.latestMessage?.content}
                   name={chat.name}
                   _id={chat._id}
                   selected={selectedChatId === chat._id}

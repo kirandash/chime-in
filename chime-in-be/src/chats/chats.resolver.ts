@@ -14,21 +14,21 @@ export class ChatsResolver {
 
   @Mutation(() => Chat)
   @UseGuards(GqlAuthGuard)
-  createChat(
+  async createChat(
     @Args('createChatInput') createChatInput: CreateChatInput,
     @CurrentUser() user: TokenPayload,
-  ) {
+  ): Promise<Chat> {
     return this.chatsService.create(createChatInput, user._id);
   }
 
   @Query(() => [Chat], { name: 'chats' })
   @UseGuards(GqlAuthGuard)
-  findAll(@CurrentUser() user: TokenPayload) {
-    return this.chatsService.findAll(user._id);
+  async findAll(): Promise<Chat[]> {
+    return this.chatsService.findMany();
   }
 
   @Query(() => Chat, { name: 'chat' })
-  findOne(@Args('_id') _id: string) {
+  async findOne(@Args('_id') _id: string): Promise<Chat> {
     return this.chatsService.findOne(_id);
   }
 

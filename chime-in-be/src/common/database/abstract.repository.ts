@@ -7,7 +7,7 @@ export abstract class AbstractRepository<T extends AbstractEntity> {
   // protected property is a class member that can be accessed by the class itself and its subclasses.
   protected abstract readonly logger: Logger;
   // model is used to define a Mongoose model.
-  constructor(private readonly model: Model<T>) {}
+  constructor(public readonly model: Model<T>) {}
 
   async create(document: Omit<T, '_id'>): Promise<T> {
     const createdDocument = new this.model({

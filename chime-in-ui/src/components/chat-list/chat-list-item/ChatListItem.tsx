@@ -9,11 +9,19 @@ import router from "../../auth/Routes";
 
 type ChatListItemProps = {
   name?: string | null;
+  username?: string | null;
   _id: string;
   selected?: boolean;
+  latestMessageContent?: string | null;
 };
 
-const ChatListItem = ({ name, _id, selected }: ChatListItemProps) => {
+const ChatListItem = ({
+  username,
+  name,
+  _id,
+  selected,
+  latestMessageContent,
+}: ChatListItemProps) => {
   return (
     <ListItem alignItems="flex-start" disablePadding>
       <ListItemButton
@@ -35,9 +43,9 @@ const ChatListItem = ({ name, _id, selected }: ChatListItemProps) => {
                 variant="body2"
                 color="text.primary"
               >
-                Ali Connors
+                {username ?? ""}
               </Typography>
-              {" — I'll be in your neighborhood doing errands this…"}
+              {" " + (latestMessageContent ?? "")}
             </React.Fragment>
           }
         />
