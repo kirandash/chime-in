@@ -3,6 +3,7 @@ import { CreateChatInput } from './dto/create-chat.input';
 import { UpdateChatInput } from './dto/update-chat.input';
 import { ChatsRepository } from './chats.repository';
 import { PipelineStage, Types } from 'mongoose';
+import { PaginationArgs } from '../common/dto/pagination-args.dto';
 
 @Injectable()
 export class ChatsService {
@@ -19,10 +20,32 @@ export class ChatsService {
     });
   }
 
-  async findMany(prePipelineStages: PipelineStage[] = []) {
+  async countChats() {
+    return await this.chatsRepository.model.countDocuments({});
+  }
+
+  async findMany(
+    prePipelineStages: PipelineStage[] = [],
+    paginationArgs: PaginationArgs,
+  ) {
     const chats = await this.chatsRepository.model.aggregate([
       ...prePipelineStages,
-      { $set: { latestMessage: { $arrayElemAt: ['$messages', -1] } } },
+      {
+        $set: {
+          latestMessage: {
+            // conditional operator to check if messages is empty and return an object with createdAt field or the last message from messages
+            $cond: [
+              '$messages',
+              { $arrayElemAt: ['$messages', -1] },
+              { createdAt: new Date() },
+            ],
+          },
+        },
+      },
+      // sort the chat using messages creation time to avoid skewed results
+      { $sort: { 'latestMessage.createdAt': -1 } },
+      { $skip: paginationArgs.skip },
+      { $limit: paginationArgs.limit },
       // remove messages as it can get very large and consume a lot of memory
       { $unset: 'messages' },
       {
