@@ -4,8 +4,9 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
-import { ListItemButton } from "@mui/material";
+import { Box, ListItemButton } from "@mui/material";
 import router from "../../auth/Routes";
+import "./ChatListItem.css";
 
 type ChatListItemProps = {
   name?: string | null;
@@ -36,7 +37,14 @@ const ChatListItem = ({
         <ListItemText
           primary={name}
           secondary={
-            <React.Fragment>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-start",
+                flexWrap: "wrap",
+              }}
+            >
               <Typography
                 sx={{ display: "inline" }}
                 component="span"
@@ -45,8 +53,10 @@ const ChatListItem = ({
               >
                 {username ?? ""}
               </Typography>
-              {" " + (latestMessageContent ?? "")}
-            </React.Fragment>
+              <div className="content">
+                {" " + (latestMessageContent ?? "")}
+              </div>
+            </Box>
           }
         />
       </ListItemButton>

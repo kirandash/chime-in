@@ -114,7 +114,8 @@ const Chat = () => {
                       </Typography>
                     </Paper>
                     <Typography variant="caption">
-                      {new Date(message.createdAt).toLocaleTimeString()}
+                      {new Date(message.createdAt).toLocaleTimeString()} -{" "}
+                      {new Date(message.createdAt).toLocaleDateString()}
                     </Typography>
                   </Grid>
                 </Grid>

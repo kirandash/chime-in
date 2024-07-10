@@ -1,0 +1,8 @@
+/* CSS to limit chat list item content to one line */
+.content {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
