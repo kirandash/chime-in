@@ -281,3 +281,12 @@ mutation {
 
 - `nest g controller chats`
 - create chats.controller to add `chats/counts` GET endpoint to count the number of chats
+
+### 48 Frontend Pagination
+
+- infinite scroll libraries
+  - https://www.npmjs.com/package/react-infinite-scroll-hook (1KB)
+  - https://www.npmjs.com/package/react-infinite-scroller (2KB) - we are using this to explore a new library
+  - npm i -D @types/react-infinite-scroller
+- useCountChats hook and update useFindChats hook to accept skip and limit
+- customize apollo-client cache to merge the new data with the old data

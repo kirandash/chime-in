@@ -26,7 +26,7 @@ export class ChatsService {
 
   async findMany(
     prePipelineStages: PipelineStage[] = [],
-    paginationArgs: PaginationArgs,
+    paginationArgs?: PaginationArgs,
   ) {
     const chats = await this.chatsRepository.model.aggregate([
       ...prePipelineStages,

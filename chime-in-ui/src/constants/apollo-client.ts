@@ -48,7 +48,31 @@ const splitLink = split(
 
 const client = new ApolloClient({
   // cache is a new instance of InMemoryCache. This will be used to store the data that we fetch from the server.
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          chats: {
+            // keyArgs is set to false, which means that we don't want to cache separate results based on different arguments.
+            keyArgs: false,
+            // merge is a function that will be called when we fetch more data from the server.
+            merge(existing, incoming, { args }: any) {
+              const merged = existing ? existing.slice(0) : [];
+              // loop through the incoming data and add it to the merged array
+              for (let i = 0; i < incoming.length; ++i) {
+                merged[args.skip + i] = incoming[i];
+                // merged[10] = incoming[0]
+                // merged[11] = incoming[1]
+                // merged[12] = incoming[2]
+                // merged[13] = incoming[3]
+              }
+              return merged;
+            },
+          },
+        },
+      },
+    },
+  }),
   // uri is the URL of the GraphQL server that we want to connect to.
   uri: `${API_URL}/graphql`,
   link: logoutLink.concat(splitLink),
