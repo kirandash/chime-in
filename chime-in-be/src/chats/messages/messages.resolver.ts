@@ -27,8 +27,7 @@ export class MessagesResolver {
   async getMessages(
     @Args() getMessageArgs: GetMessagesArgs,
   ): Promise<Message[]> {
-    // TODO: Fix the type
-    return this.messagesService.getMessages(getMessageArgs.chatId);
+    return this.messagesService.getMessages(getMessageArgs);
   }
 
   @Subscription(() => Message, {

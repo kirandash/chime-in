@@ -8,6 +8,7 @@ import { MESSAGE_CREATED } from './constants/pubsub-triggers';
 import { MessageDocument } from './entities/message.document';
 import { Message } from './entities/message.entity';
 import { UsersService } from '../../users/users.service';
+import { GetMessagesArgs } from './dto/get-messages.args';
 
 @Injectable()
 export class MessagesService {
@@ -16,6 +17,26 @@ export class MessagesService {
     private readonly usersService: UsersService,
     @Inject(PUB_SUB) private readonly pubSub: PubSub,
   ) {}
+
+  async countMessages(chatId: string) {
+    // aggregate will return an array of elements. We are using [0] to get the first element which will be the count of the messages.
+    return (
+      await this.chatsRepository.model.aggregate([
+        {
+          // $match operator is used to filter the documents by the chatId
+          $match: {
+            _id: new Types.ObjectId(chatId),
+          },
+        },
+        // $unwind operator is used to deconstruct an array field from the input documents to output a document for each element.
+        { $unwind: '$messages' },
+        // $count operator is used to return the count of the documents
+        {
+          $count: 'messages',
+        },
+      ])
+    )[0];
+  }
 
   async createMessage({ content, chatId }: CreateMessageInput, userId: string) {
     const messageDocument: MessageDocument = {
@@ -56,8 +77,8 @@ export class MessagesService {
     return message;
   }
 
-  async getMessages(chatId: string) {
-    // using aggregate pipleine to perform the following operations in one DB request
+  async getMessages({ chatId, skip, limit }: GetMessagesArgs) {
+    // using aggregate pipeline to perform the following operations in one DB request
     return await this.chatsRepository.model.aggregate(
       // aggregation pipeline to filter the chat by chatId
       [
@@ -74,6 +95,11 @@ export class MessagesService {
         // $replaceRoot operator is used to remove all the fields of the input document and replace them with the specified fields.
         {
           $replaceRoot: { newRoot: '$messages' },
+        },
+        { $skip: skip },
+        { $limit: limit },
+        {
+          $sort: { createdAt: -1 },
         },
         // $lookup operator is used to perform a left outer join to another collection in the same database to filter in documents from the "joined" collection for processing.
         {

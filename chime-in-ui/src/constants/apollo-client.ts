@@ -55,19 +55,12 @@ const client = new ApolloClient({
           chats: {
             // keyArgs is set to false, which means that we don't want to cache separate results based on different arguments.
             keyArgs: false,
-            // merge is a function that will be called when we fetch more data from the server.
-            merge(existing, incoming, { args }: any) {
-              const merged = existing ? existing.slice(0) : [];
-              // loop through the incoming data and add it to the merged array
-              for (let i = 0; i < incoming.length; ++i) {
-                merged[args.skip + i] = incoming[i];
-                // merged[10] = incoming[0]
-                // merged[11] = incoming[1]
-                // merged[12] = incoming[2]
-                // merged[13] = incoming[3]
-              }
-              return merged;
-            },
+            merge,
+          },
+          messages: {
+            // keyArgs is set to ["chatId"], which means that we want to cache separate results based on different chatIds.
+            keyArgs: ["chatId"],
+            merge,
           },
         },
       },
@@ -77,5 +70,19 @@ const client = new ApolloClient({
   uri: `${API_URL}/graphql`,
   link: logoutLink.concat(splitLink),
 });
+
+// merge is a function that will be called when we fetch more data from the server.
+function merge(existing: any, incoming: any, { args }: any) {
+  const merged = existing ? existing.slice(0) : [];
+  // loop through the incoming data and add it to the merged array
+  for (let i = 0; i < incoming.length; ++i) {
+    merged[args.skip + i] = incoming[i];
+    // merged[10] = incoming[0]
+    // merged[11] = incoming[1]
+    // merged[12] = incoming[2]
+    // merged[13] = incoming[3]
+  }
+  return merged;
+}
 
 export default client;
