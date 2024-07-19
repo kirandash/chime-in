@@ -296,3 +296,23 @@ mutation {
 - `nest g controller chats/messages`
 
 ### 50 Date formatting and latest message style change
+
+### 51 AWS S3 setup
+
+- https://aws.amazon.com/
+- aws s3 free tier: https://aws.amazon.com/free/?all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc&awsf.Free%20Tier%20Types=*all&awsf.Free%20Tier%20Categories=*all
+- Steps:
+  - setup aws account
+  - create an s3 bucket (in search bar type s3)
+  - create a user with s3 access (in search bar type iam) - click users - create user
+  - assign s3 full access policy to the user
+  - create security credentials for the user
+
+### 52 Upload Image to S3 using Backend
+
+- https://docs.nestjs.com/techniques/file-upload
+- `pnpm i -D @types/multer`,
+- `nest g module common/s3`
+- `nest g service common/s3`
+- `pnpm i @aws-sdk/client-s3`
+  - https://www.npmjs.com/package/@aws-sdk/client-s3

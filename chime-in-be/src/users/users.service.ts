@@ -7,9 +7,14 @@ import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { UsersRepository } from './users.repository';
 import * as bcrypt from 'bcrypt';
+import { S3Service } from '../common/s3/s3.service';
+import { USER_IMAGE_FILE_EXTENSION, USERS_BUCKET } from './users.constants';
 @Injectable()
 export class UsersService {
-  constructor(private readonly usersRepository: UsersRepository) {}
+  constructor(
+    private readonly usersRepository: UsersRepository,
+    private readonly s3Service: S3Service,
+  ) {}
 
   private async hashPassword(password: string) {
     // 10 is the number of salt rounds. The higher the number, the more secure the hash.
@@ -56,6 +61,14 @@ export class UsersService {
         },
       },
     );
+  }
+
+  async uploadProfileImage(file: Buffer, userId: string) {
+    await this.s3Service.uploadFile({
+      bucket: USERS_BUCKET,
+      key: `${userId}.${USER_IMAGE_FILE_EXTENSION}`,
+      file,
+    });
   }
 
   async remove(_id: string) {
