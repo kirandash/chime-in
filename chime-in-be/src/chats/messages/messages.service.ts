@@ -79,7 +79,7 @@ export class MessagesService {
 
   async getMessages({ chatId, skip, limit }: GetMessagesArgs) {
     // using aggregate pipeline to perform the following operations in one DB request
-    return await this.chatsRepository.model.aggregate(
+    const messages = await this.chatsRepository.model.aggregate(
       // aggregation pipeline to filter the chat by chatId
       [
         {
@@ -122,6 +122,10 @@ export class MessagesService {
         },
       ],
     );
+    for (const message of messages) {
+      message.user = this.usersService.toEntity(message.user);
+    }
+    return messages;
   }
 
   async messageCreated() {

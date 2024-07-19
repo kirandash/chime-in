@@ -86,6 +86,7 @@ const ChatList = () => {
                       name={chat.name}
                       _id={chat._id}
                       selected={selectedChatId === chat._id}
+                      imageUrl={chat.latestMessage?.user.imageUrl}
                     />
                     {index !== data.chats.length - 1 && (
                       <Divider variant="inset" />

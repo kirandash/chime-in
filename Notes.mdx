@@ -318,3 +318,25 @@ mutation {
   - https://www.npmjs.com/package/@aws-sdk/client-s3
 
 ### 53 Upload Image to S3 using Frontend
+
+### 54 Set User Profile Image on Backend and display on UI
+
+- to fix the s3 url access issue, add a new policy to the bucket
+  - go to bucket -> permissions -> bucket policy -> edit policy
+- ```json
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "Statement1",
+        "Principal": "*",
+        "Effect": "Allow",
+        "Action": "s3:GetObject",
+        "Resource": [
+          "arn:aws:s3:::chime-in-users/*",
+          "arn:aws:s3:::chime-in-users"
+        ]
+      }
+    ]
+  }
+  ```

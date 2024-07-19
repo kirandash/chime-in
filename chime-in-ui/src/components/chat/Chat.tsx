@@ -104,10 +104,22 @@ const Chat = () => {
                   alignItems={"center"}
                   marginBottom={"0.5rem"}
                 >
-                  <Grid item xs={2} md={1}>
-                    <Avatar src="" sx={{ width: 30, height: 30 }} />
+                  <Grid item md={2}>
+                    <Stack
+                      spacing={1}
+                      alignItems={"center"}
+                      justifyContent={"center"}
+                    >
+                      <Avatar
+                        src={message.user.imageUrl}
+                        sx={{ width: 30, height: 30 }}
+                      />
+                      <Typography variant="caption">
+                        {message.user.username}
+                      </Typography>
+                    </Stack>
                   </Grid>
-                  <Grid item xs={10} md={11}>
+                  <Grid item md={10}>
                     <Paper sx={{ width: "fit-content" }}>
                       <Typography sx={{ padding: "1rem" }}>
                         {message.content}

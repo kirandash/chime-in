@@ -22,10 +22,9 @@ export class AuthService {
     // payload that will be encoded on the jwt token
     // don't include sensitive information in the payload
     const tokenPayload: TokenPayload = {
+      ...user,
       // toHexString() is used to convert the ObjectId to string
       _id: user._id.toHexString(),
-      email: user.email,
-      username: user.username,
     };
 
     // sign the token with the payload and the secret key

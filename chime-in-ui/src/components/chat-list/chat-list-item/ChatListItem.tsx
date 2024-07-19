@@ -14,6 +14,7 @@ type ChatListItemProps = {
   _id: string;
   selected?: boolean;
   latestMessageContent?: string | null;
+  imageUrl?: string | null;
 };
 
 const ChatListItem = ({
@@ -22,6 +23,7 @@ const ChatListItem = ({
   _id,
   selected,
   latestMessageContent,
+  imageUrl,
 }: ChatListItemProps) => {
   return (
     <ListItem alignItems="flex-start" disablePadding>
@@ -32,7 +34,7 @@ const ChatListItem = ({
         selected={selected}
       >
         <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+          <Avatar alt={`Profile Image of ${name}`} src={imageUrl ?? ""} />
         </ListItemAvatar>
         <ListItemText
           primary={name}

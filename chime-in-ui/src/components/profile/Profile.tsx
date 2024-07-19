@@ -36,7 +36,7 @@ const Profile = () => {
       sx={{ marginTop: "3rem", alignItems: "center", justifyContent: "center" }}
     >
       <Typography variant="h4">{me?.data?.me.username}</Typography>
-      <Avatar sx={{ width: 300, height: 300 }} />
+      <Avatar sx={{ width: 300, height: 300 }} src={me?.data?.me.imageUrl} />
       <Button
         component="label"
         variant="contained"
