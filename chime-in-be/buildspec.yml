@@ -6,6 +6,7 @@ phases:
       nodejs: 20
     commands:
       - npm install -g pnpm
+      - cd chime-in-be
   pre_build:
     commands:
       - pnpm install
