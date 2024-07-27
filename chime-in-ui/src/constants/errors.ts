@@ -1,5 +1,5 @@
 const UNKNOWN_ERROR_MESSAGE =
-  "An unknown error occurred. Please try again later.";
+  "An unknown error occurred. Please try again later!";
 
 const UNKNOWN_ERROR_SNACK = {
   message: UNKNOWN_ERROR_MESSAGE,
