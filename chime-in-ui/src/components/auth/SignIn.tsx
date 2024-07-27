@@ -7,7 +7,7 @@ const SignIn = () => {
   const { login, error } = useLogin();
   return (
     <Auth
-      submitButtonLabel="Sign In"
+      submitButtonLabel="Log In"
       onSubmit={(request) => login(request)}
       error={error}
     >
