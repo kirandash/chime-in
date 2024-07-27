@@ -1,1 +1,1 @@
-web: npm run start:prod
+web: cd chime-in-be && npm run start:prod
